@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YAC Group Holdings</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #d19f18;
+        --primary-dark: #003d78;
+        --secondary: #00a651;
+        --accent: #ff6b00;
+        --light: #f8f9fa;
+        --dark: #43474a;
+        --gray: #6c757d;
+        --transition: all 0.3s ease;
+        --section-spacing: 100px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        color: var(--dark);
+        line-height: 1.6;
+        overflow-x: hidden;
+        background-color: #fff;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .section {
+        padding: var(--section-spacing) 0;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .section-title h2 {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 20px;
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title h2:after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: var(--secondary);
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 14px 32px;
+        background: var(--primary);
+        color: white;
+        text-decoration: none;
+        border-radius: 30px;
+        font-weight: 500;
+        transition: var(--transition);
+        border: 2px solid var(--primary);
+        font-family: "Montserrat", sans-serif;
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 1px;
+      }
+
+      .btn:hover {
+        background: transparent;
+        color: var(--primary);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .btn-outline:hover {
+        background: var(--primary);
+        color: white;
+      }
+
+      /* Header & Navigation */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+        padding: 15px 0;
+      }
+
+      header.scrolled {
+        padding: 10px 0;
+      }
+
+      .header-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo img {
+        height: 45px;
+        margin-right: 10px;
+      }
+
+      .logo-text {
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--primary);
+        letter-spacing: 1px;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+      }
+
+      .nav-links li {
+        margin-left: 30px;
+        position: relative;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--dark);
+        font-weight: 600;
+        transition: var(--transition);
+        font-size: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      .nav-links a:after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: var(--transition);
+      }
+
+      .nav-links a:hover:after {
+        width: 100%;
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--primary);
+      }
+
+      /* Hero Section */
+      .hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+          url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80");
+        background-size: cover;
+        background-position: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-content {
+        max-width: 800px;
+        z-index: 1;
+      }
+
+      .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        animation: fadeInUp 1s ease;
+        font-weight: 800;
+        line-height: 1.2;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+        animation: fadeInUp 1s ease 0.2s forwards;
+        opacity: 0;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 20px;
+        animation: fadeInUp 1s ease 0.4s forwards;
+        opacity: 0;
+      }
+
+      /* About Section */
+      .about-content {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 40px;
+      }
+
+      .about-text {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .about-text p {
+        margin-bottom: 20px;
+        font-size: 1.1rem;
+      }
+
+      .about-image {
+        flex: 1;
+        min-width: 300px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+      }
+
+      .about-image:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2);
+      }
+
+      .about-image img {
+        width: 100%;
+        height: auto;
+        transition: var(--transition);
+      }
+
+      .about-image:hover img {
+        transform: scale(1.05);
+      }
+
+      /* Companies Section */
+      .companies {
+        background: var(--light);
+      }
+
+      .companies-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+      }
+
+      .company-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: var(--transition);
+        opacity: 0;
+        transform: translateY(50px);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .company-card.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .company-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .company-icon {
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--primary);
+        color: white;
+        font-size: 2.5rem;
+      }
+
+      .company-content {
+        padding: 25px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .company-content h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+        font-size: 1.4rem;
+      }
+
+      .company-content p {
+        color: var(--gray);
+        margin-bottom: 20px;
+        flex-grow: 1;
+      }
+
+      .company-link {
+        display: inline-flex;
+        align-items: center;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .company-link i {
+        margin-left: 8px;
+        transition: var(--transition);
+      }
+
+      .company-link:hover i {
+        transform: translateX(5px);
+      }
+
+      /* Logo Wall Section */
+      .logo-wall {
+        background: white;
+        text-align: center;
+      }
+
+      .logos-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+      }
+
+      .logo-item {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100px;
+      }
+
+      .logo-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo-item img {
+        max-width: 100%;
+        max-height: 80px;
+        transition: var(--transition);
+      }
+
+      .logo-item:hover img {
+        transform: scale(1.1);
+      }
+
+      /* Events Section */
+      .events {
+        background: var(--light);
+      }
+
+      .events-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+      }
+
+      .event-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: var(--transition);
+      }
+
+      .event-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .event-date {
+        background: var(--primary);
+        color: white;
+        padding: 15px;
+        text-align: center;
+      }
+
+      .event-date .day {
+        font-size: 2rem;
+        font-weight: 700;
+        display: block;
+      }
+
+      .event-date .month {
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+
+      .event-content {
+        padding: 25px;
+      }
+
+      .event-content h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+        font-size: 1.4rem;
+      }
+
+      .event-content p {
+        color: var(--gray);
+        margin-bottom: 20px;
+      }
+
+      .event-meta {
+        display: flex;
+        align-items: center;
+        color: var(--gray);
+        font-size: 0.9rem;
+      }
+
+      .event-meta i {
+        margin-right: 8px;
+        color: var(--primary);
+      }
+
+      /* News Section */
+      .news {
+        background: white;
+      }
+
+      .news-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 30px;
+      }
+
+      .news-card {
+        background: var(--light);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: var(--transition);
+      }
+
+      .news-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .news-image {
+        height: 200px;
+        overflow: hidden;
+      }
+
+      .news-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+      }
+
+      .news-card:hover .news-image img {
+        transform: scale(1.1);
+      }
+
+      .news-content {
+        padding: 25px;
+      }
+
+      .news-content h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+        font-size: 1.4rem;
+      }
+
+      .news-content p {
+        color: var(--gray);
+        margin-bottom: 20px;
+      }
+
+      .news-meta {
+        display: flex;
+        align-items: center;
+        color: var(--gray);
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+      }
+
+      .news-meta i {
+        margin-right: 8px;
+        color: var(--primary);
+      }
+
+      /* Contact Section */
+      .contact {
+        background: var(--light);
+      }
+
+      .contact-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 50px;
+      }
+
+      .contact-info h3 {
+        color: var(--primary);
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+      }
+
+      .contact-details {
+        list-style: none;
+        margin-top: 30px;
+      }
+
+      .contact-details li {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      .contact-details i {
+        margin-right: 15px;
+        color: var(--primary);
+        font-size: 1.2rem;
+        width: 20px;
+      }
+
+      .contact-form {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--dark);
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-family: "Poppins", sans-serif;
+        transition: var(--transition);
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(0, 85, 165, 0.1);
+      }
+
+      textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+      }
+
+      /* Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .modal.active {
+        display: flex;
+        opacity: 1;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+      }
+
+      .modal.active .modal-content {
+        transform: translateY(0);
+      }
+
+      .modal-icon {
+        font-size: 3rem;
+        color: var(--secondary);
+        margin-bottom: 20px;
+      }
+
+      .modal h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+      }
+
+      .modal p {
+        color: var(--gray);
+        margin-bottom: 20px;
+      }
+
+      .modal-close {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 500;
+        transition: var(--transition);
+      }
+
+      .modal-close:hover {
+        background: var(--primary-dark);
+      }
+
+      /* Stats Section */
+      .stats {
+        background: linear-gradient(
+            rgba(0, 85, 165, 0.9),
+            rgba(0, 85, 165, 0.9)
+          ),
+          url("https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80");
+        background-size: cover;
+        background-attachment: fixed;
+        color: white;
+        text-align: center;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+      }
+
+      .stat-item {
+        padding: 20px;
+      }
+
+      .stat-number {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      .stat-text {
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--dark);
+        color: white;
+        padding: 80px 0 30px;
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        margin-bottom: 60px;
+      }
+
+      .footer-col h3 {
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 15px;
+      }
+
+      .footer-col h3:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: var(--secondary);
+      }
+
+      .footer-col p {
+        margin-bottom: 20px;
+        opacity: 0.8;
+        line-height: 1.8;
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 12px;
+      }
+
+      .footer-links a {
+        color: white;
+        text-decoration: none;
+        opacity: 0.8;
+        transition: var(--transition);
+        display: inline-block;
+      }
+
+      .footer-links a:hover {
+        opacity: 1;
+        color: var(--secondary);
+        transform: translateX(5px);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 25px;
+      }
+
+      .social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: white;
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      .social-links a:hover {
+        background: var(--primary);
+        transform: translateY(-5px);
+      }
+
+      .copyright {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        opacity: 0.7;
+        font-size: 0.9rem;
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 992px) {
+        .hero h1 {
+          font-size: 2.8rem;
+        }
+
+        .about-text,
+        .about-image {
+          flex: 100%;
+        }
+
+        .hero-buttons {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .btn {
+          width: 100%;
+          text-align: center;
+        }
+
+        .contact-container {
+          gap: 30px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        :root {
+          --section-spacing: 80px;
+        }
+
+        .nav-links {
+          position: fixed;
+          top: 80px;
+          left: -100%;
+          width: 40%;
+          /* height: calc(100vh - 80px); */
+          background: white;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          transition: var(--transition);
+          padding: 40px 0;
+        }
+
+        .nav-links.active {
+          left: 0;
+        }
+
+        .nav-links li {
+          margin: 20px 0;
+        }
+
+        .mobile-menu-btn {
+          display: block;
+        }
+
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .section-title h2 {
+          font-size: 2rem;
+        }
+
+        .stat-number {
+          font-size: 2.8rem;
+        }
+
+        .logos-container {
+          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+          gap: 20px;
+        }
+
+        .logo-item {
+          height: 120px;
+          padding: 15px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .hero h1 {
+          font-size: 2rem;
+        }
+
+        .hero p {
+          font-size: 1rem;
+        }
+
+        .section-title h2 {
+          font-size: 1.8rem;
+        }
+
+        .companies-grid,
+        .events-container,
+        .news-container {
+          grid-template-columns: 1fr;
+        }
+
+        .stats-grid {
+          grid-template-columns: 1fr;
+          gap: 30px;
+        }
+
+        .contact-form {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header & Navigation -->
+    <header>
+      <div class="container">
+        <div class="header-inner">
+          <div class="logo">
+            <a href="index.html"><img src="logo.png" alt="YAC Group Logo" /></a>
+            <div class="logo-text">YAC GROUP</div>
+          </div>
+          <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+          </button>
+          <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#companies">Companies</a></li>
+            <li><a href="#logo-wall">Logos</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#news">News</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="hero-content">
+          <h1>YAC Group Holdings</h1>
+          <p>
+            A diversified conglomerate driving growth and innovation across
+            multiple industries in Ghana and beyond.
+          </p>
+          <div class="hero-buttons">
+            <a href="#companies" class="btn">Explore Our Companies</a>
+            <a href="#contact" class="btn btn-outline">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-title">
+          <h2>About YAC Group</h2>
+          <p>Consolidating excellence across diverse industries</p>
+        </div>
+        <div class="about-content">
+          <div class="about-text">
+            <p>
+              YAC Group Holdings is a dynamic consolidation of subsidiary
+              companies operating across various sectors including healthcare,
+              sports management, media production, agriculture, real estate, and
+              more.
+            </p>
+            <p>
+              Founded on principles of excellence, innovation, and social
+              responsibility, our group leverages synergies between our
+              subsidiaries to create value for our stakeholders and contribute
+              positively to the communities we serve.
+            </p>
+            <p>
+              As part of our restructuring strategy, we are enhancing our
+              digital presence to better connect with our customers, partners,
+              and the wider community.
+            </p>
+            <a href="#" class="btn">Learn More About Us</a>
+          </div>
+          <div class="about-image">
+            <img
+              src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80"
+              alt="YAC Group Office"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Companies Section -->
+    <section class="section companies" id="companies">
+      <div class="container">
+        <div class="section-title">
+          <h2>Our Companies</h2>
+          <p>Diverse portfolio of specialized subsidiaries</p>
+        </div>
+        <div class="companies-grid">
+          <!-- Company 1 -->
+          <div class="company-card">
+            <div class="company-icon">
+              <i class="fas fa-prescription-bottle"></i>
+            </div>
+            <div class="company-content">
+              <h3>Seventeen17 Pharmacy Ltd</h3>
+              <p>
+                Retail and wholesale pharmacy services providing quality
+                healthcare products to communities across Ghana.
+              </p>
+              <a href="#" class="company-link"
+                >Learn more <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+
+          <!-- Company 2 -->
+          <div class="company-card">
+            <div class="company-icon">
+              <i class="fas fa-futbol"></i>
+            </div>
+            <div class="company-content">
+              <h3>Club Consult Africa Ltd</h3>
+              <p>
+                Football agency and management company nurturing African talent
+                and connecting them with international opportunities.
+              </p>
+              <a href="#" class="company-link"
+                >Learn more <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+
+          <!-- Company 3 -->
+          <div class="company-card">
+            <div class="company-icon">
+              <i class="fas fa-tshirt"></i>
+            </div>
+            <div class="company-content">
+              <h3>Strike Ghana Ltd</h3>
+              <p>
+                Sports apparel manufacturer creating high-quality athletic wear
+                for teams and individuals.
+              </p>
+              <a href="#" class="company-link"
+                >Learn more <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+
+          <!-- Company 4 -->
+          <div class="company-card">
+            <div class="company-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="company-content">
+              <h3>YAC Investments Ltd</h3>
+              <p>
+                Diversified investment company with interests in commodities,
+                petroleum, mining, trading, and construction.
+              </p>
+              <a href="#" class="company-link"
+                >Learn more <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+
+          <!-- Company 5 -->
+          <div class="company-card">
+            <div class="company-icon">
+              <i class="fas fa-video"></i>
+            </div>
+            <div class="company-content">
+              <h3>YAC Media Productions Ltd</h3>
+              <p>
+                Creative video production and photography services for
+                corporate, commercial, and personal projects.
+              </p>
+              <a href="#" class="company-link"
+                >Learn more <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+
+          <!-- Company 6 -->
+          <div class="company-card">
+            <div class="company-icon">
+              <i class="fas fa-hands-helping"></i>
+            </div>
+            <div class="company-content">
+              <h3>Chibsah Foundation</h3>
+              <p>
+                Non-profit organization focused on health, water, and education
+                initiatives to improve lives in underserved communities.
+              </p>
+              <a href="#" class="company-link"
+                >Learn more <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+          <!-- Chibsah Farms -->
+          <div class="company-card">
+            <div class="company-icon">
+              <i class="fas fa-tractor"></i>
+            </div>
+            <div class="company-content">
+              <h3>Chibsah Farms</h3>
+              <p>
+                Agricultural enterprise specializing in crop cultivation,
+                livestock rearing, and poultry farming to promote food security
+                and sustainable agriculture.
+              </p>
+              <a href="#" class="company-link"
+                >Learn more <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+
+          <!-- Konacare Limited -->
+          <div class="company-card">
+            <div class="company-icon">
+              <i class="fas fa-first-aid"></i>
+            </div>
+            <div class="company-content">
+              <h3>Konacare Limited</h3>
+              <p>
+                Provider of medical equipment, devices, disposables, cosmetics,
+                foods, herbal medicine and related healthcare services across
+                Ghana.
+              </p>
+              <a href="#" class="company-link"
+                >Learn more <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+
+          <!-- RC Events -->
+          <div class="company-card">
+            <div class="company-icon">
+              <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="company-content">
+              <h3>RC Events</h3>
+              <p>
+                Event management company specializing in corporate events,
+                conferences, and social gatherings with end-to-end planning and
+                execution services.
+              </p>
+              <a href="#" class="company-link"
+                >Learn more <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+
+          <!-- Waterroam West Africa Ltd -->
+          <div class="company-card">
+            <div class="company-icon">
+              <i class="fas fa-tint"></i>
+            </div>
+            <div class="company-content">
+              <h3>Waterroam West Africa Ltd</h3>
+              <p>
+                Water distillation and purification company providing clean
+                drinking water solutions to communities and businesses across
+                West Africa.
+              </p>
+              <a href="#" class="company-link"
+                >Learn more <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+
+          <!-- Bricks and Marbles Ghana Ltd -->
+          <div class="company-card">
+            <div class="company-icon">
+              <i class="fas fa-building"></i>
+            </div>
+            <div class="company-content">
+              <h3>Bricks and Marbles Ghana Ltd</h3>
+              <p>
+                Real estate development company specializing in residential and
+                commercial properties with a focus on quality construction and
+                innovative design.
+              </p>
+              <a href="#" class="company-link"
+                >Learn more <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+
+          <!-- YussFathia Ventures -->
+          <div class="company-card">
+            <div class="company-icon">
+              <i class="fas fa-store"></i>
+            </div>
+            <div class="company-content">
+              <h3>YussFathia Ventures</h3>
+              <p>
+                General merchandising company offering a diverse range of
+                consumer goods and products to meet the needs of households and
+                businesses.
+              </p>
+              <a href="#" class="company-link"
+                >Learn more <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Logo Wall Section -->
+    <section class="section logo-wall" id="logo-wall">
+      <div class="container">
+        <div class="section-title">
+          <h2>Our Subsidiary Companies</h2>
+          <p>Discover the diverse portfolio of YAC Group Holdings</p>
+        </div>
+        <div class="logos-container">
+          <div class="logo-item">
+            <a href="https://www.seventeen17.com">
+              <img
+                src="images/subsidiaries/1717.png"
+                alt="Seventeen17 Pharmacy"
+              />
+            </a>
+          </div>
+          <div class="logo-item">
+            <a href="https://www.clubconsultafrica.com">
+              <img
+                src="images/subsidiaries/clubconsultafrica.png"
+                alt="Club Consult Africa"
+              />
+            </a>
+          </div>
+          <div class="logo-item">
+            <a href="https://www.strikeghana.com">
+              <img src="images/subsidiaries/strike.png" alt="Strike Ghana" />
+            </a>
+          </div>
+          <div class="logo-item">
+            <a href="https://www.yacinvestments.com">
+              <img
+                src="images/subsidiaries/yacinvestments.png"
+                alt="YAC Investments"
+              />
+            </a>
+          </div>
+          <div class="logo-item">
+            <a href="https://www.yacmedia.com">
+              <img
+                src="images/subsidiaries/yacmedia.png"
+                alt="YAC Media Productions"
+              />
+            </a>
+          </div>
+          <div class="logo-item">
+            <a href="https://www.bricksandmarbles.com">
+              <img
+                src="images/subsidiaries/bricksandmarbles.png"
+                alt="Bricks & Marbles"
+              />
+            </a>
+          </div>
+          <div class="logo-item">
+            <a href="https://www.konacarelimited.com">
+              <img
+                src="images/subsidiaries/konacare.png"
+                alt="Konacare Limited"
+              />
+            </a>
+          </div>
+          <div class="logo-item">
+            <a href="https://www.chibsahfoundation.org">
+              <img
+                src="images/subsidiaries/chibsahfoundation.png"
+                alt="Chibsah Foundation"
+              />
+            </a>
+          </div>
+          <div class="logo-item">
+            <a href="https://www.chibsahfarms.com">
+              <img
+                src="images/subsidiaries/chibsahfarms.png"
+                alt="Chibsah Farms"
+              />
+            </a>
+          </div>
+          <div class="logo-item">
+            <a href="https://www.rcevents.com">
+              <img src="images/subsidiaries/rcevents.png" alt="RC Events" />
+            </a>
+          </div>
+          <div class="logo-item">
+            <a href="https://www.yussifathiaventures.com">
+              <img
+                src="images/subsidiaries/yussifathiaventures.png"
+                alt="YussifAthia Ventures"
+              />
+            </a>
+          </div>
+          <div class="logo-item">
+            <a href="https://www.waterroam.com">
+              <img src="images/subsidiaries/waterroam.png" alt="Water Roam" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="section events" id="events">
+      <div class="container">
+        <div class="section-title">
+          <h2>Upcoming Events</h2>
+          <p>Stay updated with our latest activities and engagements</p>
+        </div>
+        <div class="events-container">
+          <div class="event-card">
+            <div class="event-date">
+              <span class="day">15</span>
+              <span class="month">Sep</span>
+            </div>
+            <div class="event-content">
+              <h3>Pharmacy Health Awareness Campaign</h3>
+              <p>
+                Seventeen17 Pharmacy launches a month-long health awareness
+                campaign across all branches in Greater Accra region.
+              </p>
+              <div class="event-meta">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Accra, Ghana</span>
+              </div>
+            </div>
+          </div>
+          <div class="event-card">
+            <div class="event-date">
+              <span class="day">22</span>
+              <span class="month">Sep</span>
+            </div>
+            <div class="event-content">
+              <h3>Youth Football Talent Scouting</h3>
+              <p>
+                Club Consult Africa hosts its annual youth football talent
+                scouting event in Kumasi for players aged 15-21.
+              </p>
+              <div class="event-meta">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Kumasi, Ghana</span>
+              </div>
+            </div>
+          </div>
+          <div class="event-card">
+            <div class="event-date">
+              <span class="day">05</span>
+              <span class="month">Oct</span>
+            </div>
+            <div class="event-content">
+              <h3>YAC Investments Forum</h3>
+              <p>
+                Annual investor forum showcasing opportunities in mining,
+                petroleum, and commodity trading sectors.
+              </p>
+              <div class="event-meta">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Virtual Event</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="section news" id="news">
+      <div class="container">
+        <div class="section-title">
+          <h2>News & Articles</h2>
+          <p>Latest updates from across the YAC Group</p>
+        </div>
+        <div class="news-container">
+          <div class="news-card">
+            <div class="news-image">
+              <img
+                src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                alt="Pharmacy News"
+              />
+            </div>
+            <div class="news-content">
+              <div class="news-meta">
+                <i class="far fa-calendar"></i>
+                <span>August 25, 2023</span>
+              </div>
+              <h3>Seventeen17 Pharmacy Expands to Northern Region</h3>
+              <p>
+                YAC Group's pharmaceutical subsidiary opens three new locations
+                in Tamale, bringing quality healthcare products to Northern
+                Ghana.
+              </p>
+              <a href="#" class="company-link"
+                >Read more <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+          <div class="news-card">
+            <div class="news-image">
+              <img
+                src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                alt="Sports News"
+              />
+            </div>
+            <div class="news-content">
+              <div class="news-meta">
+                <i class="far fa-calendar"></i>
+                <span>August 18, 2023</span>
+              </div>
+              <h3>Club Consult Africa Signs Partnership with European Club</h3>
+              <p>
+                Groundbreaking agreement enables Ghanaian football talent to
+                access training opportunities with top European football clubs.
+              </p>
+              <a href="#" class="company-link"
+                >Read more <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+          <div class="news-card">
+            <div class="news-image">
+              <img
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                alt="Investment News"
+              />
+            </div>
+            <div class="news-content">
+              <div class="news-meta">
+                <i class="far fa-calendar"></i>
+                <span>August 10, 2023</span>
+              </div>
+              <h3>YAC Investments Announces New Mining Venture</h3>
+              <p>
+                Strategic partnership with international mining company to
+                develop gold mining operations in Western Region.
+              </p>
+              <a href="#" class="company-link"
+                >Read more <i class="fas fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section stats">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number" data-count="11">0</div>
+            <div class="stat-text">Subsidiary Companies</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-count="150">0</div>
+            <div class="stat-text">Employees</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-count="8">0</div>
+            <div class="stat-text">Business Sectors</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-count="5">0</div>
+            <div class="stat-text">Years of Operation</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+      <div class="container">
+        <div class="section-title">
+          <h2>Contact Us</h2>
+          <p>Get in touch with YAC Group Holdings</p>
+        </div>
+        <div class="contact-container">
+          <div class="contact-info">
+            <h3>We'd Love to Hear From You</h3>
+            <p>
+              Whether you have questions about our services, want to explore
+              partnership opportunities, or need more information about our
+              subsidiaries, our team is here to help.
+            </p>
+            <ul class="contact-details">
+              <li>
+                <i class="fas fa-map-marker-alt"></i>
+                <span>123 Independence Avenue, Accra, Ghana</span>
+              </li>
+              <li>
+                <i class="fas fa-phone"></i>
+                <span>+233 XXX XXX XXX</span>
+              </li>
+              <li>
+                <i class="fas fa-envelope"></i>
+                <span>info@yacgroup.com</span>
+              </li>
+              <li>
+                <i class="fas fa-clock"></i>
+                <span>Monday - Friday: 8:00 AM - 5:00 PM</span>
+              </li>
+            </ul>
+          </div>
+          <div class="contact-form">
+            <form
+              id="contactForm"
+              action="https://formspree.io/f/mvgakjww"
+              method="POST"
+            >
+              <div class="form-group">
+                <label for="name">Full Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  class="form-control"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" class="btn">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <a href="index.html">
+              <img
+                src="logo.png"
+                alt="YAC Group Logo"
+                style="margin-bottom: 20px; max-width: 150px"
+            /></a>
+            <p>
+              A consolidation of diverse subsidiary companies driving innovation
+              and growth across multiple industries.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+              <li><a href="#home">Home</a></li>
+              <li><a href="#about">About Us</a></li>
+              <li><a href="#companies">Our Companies</a></li>
+              <li><a href="#logo-wall">Subsidiary Logos</a></li>
+              <li><a href="#events">Events</a></li>
+              <li><a href="#news">News</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Our Companies</h3>
+            <ul class="footer-links">
+              <li><a href="#">Seventeen17 Pharmacy Ltd</a></li>
+              <li><a href="#">Club Consult Africa Ltd</a></li>
+              <li><a href="#">Strike Ghana Ltd</a></li>
+              <li><a href="#">YAC Investments Ltd</a></li>
+              <li><a href="#">YAC Media Productions Ltd</a></li>
+              <li><a href="#">Chibsah Foundation</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Contact Us</h3>
+            <ul class="footer-links">
+              <li><i class="fas fa-map-marker-alt"></i> Accra, Ghana</li>
+              <li><i class="fas fa-phone"></i> +233 XXX XXX XXX</li>
+              <li><i class="fas fa-envelope"></i> info@yacgroup.com</li>
+            </ul>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>&copy; 2023 YAC Group Holdings. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+      <div class="modal-content">
+        <div class="modal-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h3>Message Received!</h3>
+        <p>
+          Thank you for contacting YAC Group Holdings. We have received your
+          message and will respond to you soon.
+        </p>
+        <button class="modal-close" onclick="closeModal()">OK</button>
+      </div>
+    </div>
+
+    <script>
+      // Mobile menu toggle
+      const menuBtn = document.querySelector(".mobile-menu-btn");
+      const navLinks = document.querySelector(".nav-links");
+
+      menuBtn.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+        menuBtn.querySelector("i").classList.toggle("fa-bars");
+        menuBtn.querySelector("i").classList.toggle("fa-times");
+      });
+
+      // Header scroll effect
+      window.addEventListener("scroll", () => {
+        const header = document.querySelector("header");
+        if (window.scrollY > 50) {
+          header.classList.add("scrolled");
+        } else {
+          header.classList.remove("scrolled");
+        }
+      });
+
+      // Animate company cards on scroll
+      const companyCards = document.querySelectorAll(".company-card");
+
+      function checkScroll() {
+        companyCards.forEach((card) => {
+          const cardTop = card.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (cardTop < windowHeight - 100) {
+            card.classList.add("visible");
+          }
+        });
+      }
+
+      window.addEventListener("scroll", checkScroll);
+      window.addEventListener("load", checkScroll);
+
+      // Animate stats counting
+      const statNumbers = document.querySelectorAll(".stat-number");
+      let counted = false;
+
+      function animateStats() {
+        const statsSection = document.querySelector(".stats");
+        const statsTop = statsSection.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if (statsTop < windowHeight - 100 && !counted) {
+          counted = true;
+
+          statNumbers.forEach((stat) => {
+            const target = parseInt(stat.getAttribute("data-count"));
+            const duration = 2000; // ms
+            const increment = target / (duration / 16);
+            let current = 0;
+
+            const timer = setInterval(() => {
+              current += increment;
+              if (current >= target) {
+                clearInterval(timer);
+                current = target;
+              }
+              stat.textContent = Math.floor(current);
+            }, 16);
+          });
+        }
+      }
+
+      window.addEventListener("scroll", animateStats);
+
+      // Form submission handling
+      const contactForm = document.getElementById("contactForm");
+      const successModal = document.getElementById("successModal");
+
+      contactForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // Simple form validation
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const subject = document.getElementById("subject").value;
+        const message = document.getElementById("message").value;
+
+        if (!name || !email || !subject || !message) {
+          alert("Please fill in all fields");
+          return;
+        }
+
+        // Submit form via Formspree
+        const formData = new FormData(contactForm);
+
+        fetch(contactForm.action, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              // Show success modal
+              successModal.classList.add("active");
+              contactForm.reset();
+            } else {
+              throw new Error("Form submission failed");
+            }
+          })
+          .catch((error) => {
+            alert(
+              "There was a problem sending your message. Please try again later."
+            );
+            console.error("Error:", error);
+          });
+      });
+
+      // Close modal function
+      function closeModal() {
+        successModal.classList.remove("active");
+      }
+
+      // Close modal when clicking outside
+      window.addEventListener("click", function (e) {
+        if (e.target === successModal) {
+          closeModal();
+        }
+      });
+    </script>
+  </body>
+</html>
