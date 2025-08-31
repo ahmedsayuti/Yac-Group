@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - YAC Group Holdings</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Reuse the same CSS variables and base styles from index.html */
+      :root {
+        --primary: #d19f18;
+        --primary-dark: #003d78;
+        --secondary: #00a651;
+        --accent: #ff6b00;
+        --light: #f8f9fa;
+        --dark: #43474a;
+        --gray: #6c757d;
+        --transition: all 0.3s ease;
+        --section-spacing: 100px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        color: var(--dark);
+        line-height: 1.6;
+        overflow-x: hidden;
+        background-color: #fff;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .section {
+        padding: var(--section-spacing) 0;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 1s ease, transform 1s ease;
+      }
+
+      .section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .section-title h2 {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 20px;
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title h2:after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: var(--secondary);
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 14px 32px;
+        background: var(--primary);
+        color: white;
+        text-decoration: none;
+        border-radius: 30px;
+        font-weight: 500;
+        transition: var(--transition);
+        border: 2px solid var(--primary);
+        font-family: "Montserrat", sans-serif;
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .btn:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: white;
+        transition: var(--transition);
+        z-index: -1;
+      }
+
+      .btn:hover {
+        color: var(--primary);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn:hover:before {
+        left: 0;
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .btn-outline:before {
+        background: var(--primary);
+      }
+
+      .btn-outline:hover {
+        color: white;
+      }
+
+      /* Loading Animation */
+      .loader-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease;
+      }
+
+      .loader {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(209, 159, 24, 0.2);
+        border-radius: 50%;
+        border-top: 5px solid var(--primary);
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Scroll to top button */
+      .scroll-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+        z-index: 999;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .scroll-to-top.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .scroll-to-top:hover {
+        background: var(--primary-dark);
+        transform: translateY(-5px);
+      }
+
+      /* Header & Navigation */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+        padding: 15px 0;
+      }
+
+      header.scrolled {
+        padding: 10px 0;
+      }
+
+      .header-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo img {
+        height: 45px;
+        margin-right: 10px;
+        transition: var(--transition);
+      }
+
+      .logo:hover img {
+        transform: rotate(5deg);
+      }
+
+      .logo-text {
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--primary);
+        letter-spacing: 1px;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+      }
+
+      .nav-links li {
+        margin-left: 30px;
+        position: relative;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--dark);
+        font-weight: 600;
+        transition: var(--transition);
+        font-size: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      .nav-links a:after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: var(--transition);
+      }
+
+      .nav-links a:hover:after {
+        width: 100%;
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--primary);
+        transition: var(--transition);
+        z-index: 1001;
+      }
+
+      .mobile-menu-btn:hover {
+        transform: rotate(90deg);
+      }
+
+      /* Contact Hero Section */
+      .contact-hero {
+        height: 50vh;
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+          url("https://images.unsplash.com/photo-1516387938699-a93567ec168e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80");
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        color: white;
+        text-align: center;
+        margin-top: 80px;
+      }
+
+      .contact-hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .contact-hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        animation: fadeInUp 1s ease;
+      }
+
+      .contact-hero p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        animation: fadeInUp 1s ease 0.3s;
+        animation-fill-mode: both;
+      }
+
+      /* Contact Section */
+      .contact-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 50px;
+      }
+
+      .contact-info {
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: opacity 1s ease, transform 1s ease;
+      }
+
+      .contact-info.visible {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .contact-info h3 {
+        color: var(--primary);
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+      }
+
+      .contact-details {
+        list-style: none;
+        margin-top: 30px;
+      }
+
+      .contact-details li {
+        margin-bottom: 25px;
+        display: flex;
+        align-items: flex-start;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      .contact-details li.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .contact-details i {
+        margin-right: 15px;
+        color: var(--primary);
+        font-size: 1.5rem;
+        width: 24px;
+        margin-top: 5px;
+      }
+
+      .contact-details span {
+        flex: 1;
+      }
+
+      .contact-details .detail-title {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 5px;
+        color: var(--dark);
+      }
+
+      .contact-form {
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        opacity: 0;
+        transform: translateX(50px);
+        transition: opacity 1s ease, transform 1s ease;
+      }
+
+      .contact-form.visible {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+        position: relative;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--dark);
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 15px 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-family: "Poppins", sans-serif;
+        transition: var(--transition);
+        font-size: 16px;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(209, 159, 24, 0.1);
+      }
+
+      textarea.form-control {
+        min-height: 150px;
+        resize: vertical;
+      }
+
+      .form-error {
+        color: #dc3545;
+        font-size: 0.8rem;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .form-control.error {
+        border-color: #dc3545;
+      }
+
+      .form-control.error + .form-error {
+        display: block;
+      }
+
+      /* Map Section */
+      .map-section {
+        padding: 80px 0;
+        background: var(--light);
+      }
+
+      .map-container {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        height: 450px;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 1s ease, transform 1s ease;
+      }
+
+      .map-container.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .map-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* Branches Section */
+      .branches {
+        padding: 80px 0;
+      }
+
+      .branches-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+
+      .branch-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: var(--transition);
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .branch-card.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .branch-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .branch-header {
+        background: var(--primary);
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .branch-content {
+        padding: 25px;
+      }
+
+      .branch-details {
+        list-style: none;
+        margin-top: 20px;
+      }
+
+      .branch-details li {
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+      }
+
+      .branch-details i {
+        margin-right: 10px;
+        color: var(--primary);
+        width: 20px;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--dark);
+        color: white;
+        padding: 80px 0 30px;
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        margin-bottom: 60px;
+      }
+
+      .footer-col h3 {
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 15px;
+      }
+
+      .footer-col h3:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: var(--secondary);
+      }
+
+      .footer-col p {
+        margin-bottom: 20px;
+        opacity: 0.8;
+        line-height: 1.8;
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 12px;
+      }
+
+      .footer-links a {
+        color: white;
+        text-decoration: none;
+        opacity: 0.8;
+        transition: var(--transition);
+        display: inline-block;
+      }
+
+      .footer-links a:hover {
+        opacity: 1;
+        color: var(--secondary);
+        transform: translateX(5px);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 25px;
+      }
+
+      .social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: white;
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      .social-links a:hover {
+        background: var(--primary);
+        transform: translateY(-5px);
+      }
+
+      .copyright {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        opacity: 0.7;
+        font-size: 0.9rem;
+      }
+
+      /* Success Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .modal.active {
+        display: flex;
+        opacity: 1;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+      }
+
+      .modal.active .modal-content {
+        transform: translateY(0);
+      }
+
+      .modal-icon {
+        font-size: 3rem;
+        color: var(--secondary);
+        margin-bottom: 20px;
+      }
+
+      .modal h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+      }
+
+      .modal p {
+        color: var(--gray);
+        margin-bottom: 20px;
+      }
+
+      .modal-close {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 500;
+        transition: var(--transition);
+      }
+
+      .modal-close:hover {
+        background: var(--primary-dark);
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 992px) {
+        .contact-container {
+          gap: 30px;
+        }
+
+        .contact-hero h1 {
+          font-size: 2.8rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        :root {
+          --section-spacing: 80px;
+        }
+
+        .nav-links {
+          position: fixed;
+          top: 80px;
+          left: -100%;
+          width: 80%;
+          height: calc(100vh - 80px);
+          background: white;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+          transition: var(--transition);
+          padding: 40px 0;
+          box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links.active {
+          left: 0;
+        }
+
+        .nav-links li {
+          margin: 15px 0;
+        }
+
+        .mobile-menu-btn {
+          display: block;
+        }
+
+        .contact-hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .section-title h2 {
+          font-size: 2rem;
+        }
+
+        .contact-form {
+          padding: 30px 20px;
+        }
+
+        .scroll-to-top {
+          bottom: 20px;
+          right: 20px;
+          width: 40px;
+          height: 40px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .contact-hero h1 {
+          font-size: 2rem;
+        }
+
+        .contact-hero p {
+          font-size: 1rem;
+        }
+
+        .section-title h2 {
+          font-size: 1.8rem;
+        }
+
+        .contact-container {
+          grid-template-columns: 1fr;
+        }
+
+        .branches-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .map-container {
+          height: 350px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Animation -->
+    <div class="loader-wrapper">
+      <div class="loader"></div>
+    </div>
+
+    <!-- Scroll to top button -->
+    <div class="scroll-to-top">
+      <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header>
+      <div class="container">
+        <div class="header-inner">
+          <div class="logo">
+            <a href="index.html"><img src="logo.png" alt="YAC Group Logo" /></a>
+            <div class="logo-text">YAC GROUP</div>
+          </div>
+          <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+          </button>
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="index.html#companies">Companies</a></li>
+            <li><a href="index.html#logo-wall">Brands</a></li>
+            <li><a href="index.html#events">Events</a></li>
+            <li><a href="index.html#news">News</a></li>
+            <li><a href="contact.html" class="active">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- Contact Hero Section -->
+    <section class="contact-hero">
+      <div class="container">
+        <div class="contact-hero-content">
+          <h1>Get In Touch</h1>
+          <p>
+            We'd love to hear from you. Reach out to us for any inquiries,
+            partnerships, or information about our services.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+      <div class="container">
+        <div class="section-title">
+          <h2>Contact Us</h2>
+          <p>We're here to help and answer any questions you might have</p>
+        </div>
+        <div class="contact-container">
+          <div class="contact-info">
+            <h3>Let's Talk</h3>
+            <p>
+              Whether you have questions about our services, want to explore
+              partnership opportunities, or need more information about our
+              subsidiaries, our team is here to help.
+            </p>
+            <ul class="contact-details">
+              <li>
+                <i class="fas fa-map-marker-alt"></i>
+                <span>
+                  <span class="detail-title">Head Office</span>
+                  Tse Addo High Street, Tebibiiano-Accra, Ghana
+                </span>
+              </li>
+              <li>
+                <i class="fas fa-phone"></i>
+                <span>
+                  <span class="detail-title">Phone</span>
+                  +233 54 152 1002
+                </span>
+              </li>
+              <li>
+                <i class="fas fa-envelope"></i>
+                <span>
+                  <span class="detail-title">Email</span>
+                  info@yacgroup.com
+                </span>
+              </li>
+              <li>
+                <i class="fas fa-clock"></i>
+                <span>
+                  <span class="detail-title">Working Hours</span>
+                  Monday - Friday: 8:00 AM - 5:00 PM
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div class="contact-form">
+            <form
+              id="contactForm"
+              action="https://formspree.io/f/mvgakjww"
+              method="POST"
+            >
+              <div class="form-group">
+                <label for="name">Full Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  class="form-control"
+                  required
+                />
+                <div class="form-error">Please enter your name</div>
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-control"
+                  required
+                />
+                <div class="form-error">Please enter a valid email address</div>
+              </div>
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  class="form-control"
+                  required
+                />
+                <div class="form-error">Please enter a subject</div>
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  class="form-control"
+                  required
+                ></textarea>
+                <div class="form-error">Please enter your message</div>
+              </div>
+              <button type="submit" class="btn">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Find Us</h2>
+          <p>Visit our head office at the location below</p>
+        </div>
+        <div class="map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3970.7685312966087!2d-0.13367702656667513!3d5.6011745331969935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfdf85002c15cbbf%3A0xa1ba040430e91349!2sYAC%20GROUP!5e0!3m2!1sen!2sgh!4v1745158640118!5m2!1sen!2sgh"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Branches Section -->
+    <section class="section branches">
+      <div class="container">
+        <div class="section-title">
+          <h2>Our Offices</h2>
+          <p>Visit any of our conveniently located offices</p>
+        </div>
+        <div class="branches-grid">
+          <div class="branch-card">
+            <div class="branch-header">
+              <h3>Accra Headquarters</h3>
+            </div>
+            <div class="branch-content">
+              <p>
+                Our main office where all executive decisions and corporate
+                operations are managed.
+              </p>
+              <ul class="branch-details">
+                <li>
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Tse Addo High Street, Tebibiiano-Accra</span>
+                </li>
+                <li>
+                  <i class="fas fa-phone"></i>
+                  <span>+233 54 152 1002</span>
+                </li>
+                <li>
+                  <i class="fas fa-clock"></i>
+                  <span>Mon - Fri: 8:00 AM - 5:00 PM</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="branch-card">
+            <div class="branch-header">
+              <h3>Kumasi Office</h3>
+            </div>
+            <div class="branch-content">
+              <p>
+                Our regional office serving the Ashanti Region and surrounding
+                areas.
+              </p>
+              <ul class="branch-details">
+                <li>
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Adum, Central Business District</span>
+                </li>
+                <li>
+                  <i class="fas fa-phone"></i>
+                  <span>+233 54 152 1002</span>
+                </li>
+                <li>
+                  <i class="fas fa-clock"></i>
+                  <span>Mon - Fri: 8:00 AM - 5:00 PM</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="branch-card">
+            <div class="branch-header">
+              <h3>Takoradi Office</h3>
+            </div>
+            <div class="branch-content">
+              <p>
+                Our Western Region office focused on mining and petroleum
+                operations.
+              </p>
+              <ul class="branch-details">
+                <li>
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Airport Ridge, Takoradi</span>
+                </li>
+                <li>
+                  <i class="fas fa-phone"></i>
+                  <span>+233 54 152 1002</span>
+                </li>
+                <li>
+                  <i class="fas fa-clock"></i>
+                  <span>Mon - Fri: 8:00 AM - 5:00 PM</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <a href="index.html">
+              <img
+                src="logo.png"
+                alt="YAC Group Logo"
+                style="margin-bottom: 20px; max-width: 150px"
+            /></a>
+            <p>
+              A consolidation of diverse subsidiary companies driving innovation
+              and growth across multiple industries.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="index.html#companies">Our Companies</a></li>
+              <li><a href="index.html#logo-wall">Subsidiary Logos</a></li>
+              <li><a href="index.html#events">Events</a></li>
+              <li><a href="index.html#news">News</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Our Companies</h3>
+            <ul class="footer-links">
+              <li><a href="#">Seventeen17 Pharmacy Ltd</a></li>
+              <li><a href="#">Konacare Limited</a></li>
+              <li><a href="#">Club Consult Africa Ltd</a></li>
+              <li><a href="#">Strike Ghana Ltd</a></li>
+              <li><a href="#">Chibsah Farms</a></li>
+              <li><a href="#">YAC Media Productions Ltd</a></li>
+              <li><a href="#">Chibsah Foundation</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Contact Us</h3>
+            <ul class="footer-links">
+              <li>
+                <i class="fas fa-map-marker-alt"></i> >Head Office: Tse Addo
+                High Street, Tebibiiano-Accra, Ghana
+              </li>
+              <li><i class="fas fa-phone"></i> +233 54 152 1002</li>
+              <li><i class="fas fa-envelope"></i> info@yacgroup.com</li>
+            </ul>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>&copy; 2025 YAC Group Holdings. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+      <div class="modal-content">
+        <div class="modal-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h3>Message Received!</h3>
+        <p>
+          Thank you for contacting YAC Group Holdings. We have received your
+          message and will respond to you soon.
+        </p>
+        <button class="modal-close" onclick="closeModal()">OK</button>
+      </div>
+    </div>
+
+    <script>
+      // Page loading animation
+      window.addEventListener("load", function () {
+        const loaderWrapper = document.querySelector(".loader-wrapper");
+        setTimeout(function () {
+          loaderWrapper.style.opacity = "0";
+          setTimeout(function () {
+            loaderWrapper.style.display = "none";
+          }, 500);
+        }, 1000);
+      });
+
+      // Mobile menu toggle
+      const menuBtn = document.querySelector(".mobile-menu-btn");
+      const navLinks = document.querySelector(".nav-links");
+
+      menuBtn.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+        menuBtn.querySelector("i").classList.toggle("fa-bars");
+        menuBtn.querySelector("i").classList.toggle("fa-times");
+      });
+
+      // Close mobile menu when clicking on links
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          if (navLinks.classList.contains("active")) {
+            navLinks.classList.remove("active");
+            menuBtn.querySelector("i").classList.add("fa-bars");
+            menuBtn.querySelector("i").classList.remove("fa-times");
+          }
+        });
+      });
+
+      // Header scroll effect
+      window.addEventListener("scroll", () => {
+        const header = document.querySelector("header");
+        const scrollToTop = document.querySelector(".scroll-to-top");
+
+        if (window.scrollY > 50) {
+          header.classList.add("scrolled");
+          scrollToTop.classList.add("active");
+        } else {
+          header.classList.remove("scrolled");
+          scrollToTop.classList.remove("active");
+        }
+      });
+
+      // Scroll to top functionality
+      document.querySelector(".scroll-to-top").addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      // Scroll animations
+      function checkScroll() {
+        const sections = document.querySelectorAll(".section");
+        const contactInfo = document.querySelector(".contact-info");
+        const contactForm = document.querySelector(".contact-form");
+        const mapContainer = document.querySelector(".map-container");
+        const branchCards = document.querySelectorAll(".branch-card");
+        const contactDetails = document.querySelectorAll(".contact-details li");
+
+        sections.forEach((section) => {
+          const sectionTop = section.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (sectionTop < windowHeight - 100) {
+            section.classList.add("visible");
+          }
+        });
+
+        if (contactInfo) {
+          const elementTop = contactInfo.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (elementTop < windowHeight - 100) {
+            contactInfo.classList.add("visible");
+
+            // Animate contact details with delays
+            contactDetails.forEach((detail, index) => {
+              setTimeout(() => {
+                detail.classList.add("visible");
+              }, 300 + index * 200);
+            });
+          }
+        }
+
+        if (contactForm) {
+          const elementTop = contactForm.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (elementTop < windowHeight - 100) {
+            contactForm.classList.add("visible");
+          }
+        }
+
+        if (mapContainer) {
+          const elementTop = mapContainer.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (elementTop < windowHeight - 100) {
+            mapContainer.classList.add("visible");
+          }
+        }
+
+        branchCards.forEach((card, index) => {
+          const cardTop = card.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (cardTop < windowHeight - 100) {
+            // Add delay for staggered animation
+            setTimeout(() => {
+              card.classList.add("visible");
+            }, index * 200);
+          }
+        });
+      }
+
+      window.addEventListener("scroll", checkScroll);
+      window.addEventListener("load", checkScroll);
+
+      // Form validation
+      const contactForm = document.getElementById("contactForm");
+      if (contactForm) {
+        const formInputs = contactForm.querySelectorAll(".form-control");
+
+        formInputs.forEach((input) => {
+          input.addEventListener("blur", function () {
+            validateField(this);
+          });
+
+          input.addEventListener("input", function () {
+            clearError(this);
+          });
+        });
+
+        function validateField(field) {
+          const errorElement = field.nextElementSibling;
+
+          if (field.value.trim() === "") {
+            field.classList.add("error");
+            errorElement.style.display = "block";
+            return false;
+          }
+
+          if (field.type === "email") {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(field.value)) {
+              field.classList.add("error");
+              errorElement.style.display = "block";
+              return false;
+            }
+          }
+
+          clearError(field);
+          return true;
+        }
+
+        function clearError(field) {
+          field.classList.remove("error");
+          const errorElement = field.nextElementSibling;
+          errorElement.style.display = "none";
+        }
+
+        // Form submission handling
+        const successModal = document.getElementById("successModal");
+
+        contactForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          let formValid = true;
+
+          // Validate all fields
+          formInputs.forEach((input) => {
+            if (!validateField(input)) {
+              formValid = false;
+            }
+          });
+
+          if (!formValid) {
+            return;
+          }
+
+          // Submit form via Formspree
+          const formData = new FormData(contactForm);
+
+          fetch(contactForm.action, {
+            method: "POST",
+            body: formData,
+            headers: {
+              Accept: "application/json",
+            },
+          })
+            .then((response) => {
+              if (response.ok) {
+                // Show success modal
+                successModal.classList.add("active");
+                contactForm.reset();
+              } else {
+                throw new Error("Form submission failed");
+              }
+            })
+            .catch((error) => {
+              alert(
+                "There was a problem sending your message. Please try again later."
+              );
+              console.error("Error:", error);
+            });
+        });
+      }
+
+      // Close modal function
+      function closeModal() {
+        const successModal = document.getElementById("successModal");
+        successModal.classList.remove("active");
+      }
+
+      // Close modal when clicking outside
+      window.addEventListener("click", function (e) {
+        const successModal = document.getElementById("successModal");
+        if (e.target === successModal) {
+          closeModal();
+        }
+      });
+    </script>
+  </body>
+</html>

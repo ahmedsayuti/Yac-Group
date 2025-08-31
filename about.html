@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - YAC Group Holdings</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Reuse the same CSS variables and base styles from index.html */
+      :root {
+        --primary: #d19f18;
+        --primary-dark: #003d78;
+        --secondary: #00a651;
+        --accent: #ff6b00;
+        --light: #f8f9fa;
+        --dark: #43474a;
+        --gray: #6c757d;
+        --transition: all 0.3s ease;
+        --section-spacing: 100px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        color: var(--dark);
+        line-height: 1.6;
+        overflow-x: hidden;
+        background-color: #fff;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .section {
+        padding: var(--section-spacing) 0;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 1s ease, transform 1s ease;
+      }
+
+      .section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .section-title h2 {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 20px;
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title h2:after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: var(--secondary);
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 14px 32px;
+        background: var(--primary);
+        color: white;
+        text-decoration: none;
+        border-radius: 30px;
+        font-weight: 500;
+        transition: var(--transition);
+        border: 2px solid var(--primary);
+        font-family: "Montserrat", sans-serif;
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .btn:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: white;
+        transition: var(--transition);
+        z-index: -1;
+      }
+
+      .btn:hover {
+        color: var(--primary);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn:hover:before {
+        left: 0;
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .btn-outline:before {
+        background: var(--primary);
+      }
+
+      .btn-outline:hover {
+        color: white;
+      }
+
+      /* Loading Animation */
+      .loader-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease;
+      }
+
+      .loader {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(209, 159, 24, 0.2);
+        border-radius: 50%;
+        border-top: 5px solid var(--primary);
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Scroll to top button */
+      .scroll-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+        z-index: 999;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .scroll-to-top.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .scroll-to-top:hover {
+        background: var(--primary-dark);
+        transform: translateY(-5px);
+      }
+
+      /* Header & Navigation */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+        padding: 15px 0;
+      }
+
+      header.scrolled {
+        padding: 10px 0;
+      }
+
+      .header-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo img {
+        height: 45px;
+        margin-right: 10px;
+        transition: var(--transition);
+      }
+
+      .logo:hover img {
+        transform: rotate(5deg);
+      }
+
+      .logo-text {
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--primary);
+        letter-spacing: 1px;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+      }
+
+      .nav-links li {
+        margin-left: 30px;
+        position: relative;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--dark);
+        font-weight: 600;
+        transition: var(--transition);
+        font-size: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .nav-links a:hover {
+        color: var(--primary);
+      }
+
+      .nav-links a:after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: var(--transition);
+      }
+
+      .nav-links a:hover:after {
+        width: 100%;
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--primary);
+        transition: var(--transition);
+      }
+
+      .mobile-menu-btn:hover {
+        transform: rotate(90deg);
+      }
+
+      /* About Hero Section */
+      .about-hero {
+        height: 60vh;
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+          url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80");
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        color: white;
+        text-align: center;
+        margin-top: 80px;
+      }
+
+      .about-hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .about-hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+      }
+
+      .about-hero p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+      }
+
+      /* Mission and Vision Section */
+      .mission-vision {
+        background: var(--light);
+      }
+
+      .mv-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 40px;
+      }
+
+      .mv-card {
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        transition: var(--transition);
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .mv-card.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .mv-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .mv-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin: 0 auto 25px;
+        transition: var(--transition);
+      }
+
+      .mv-card:hover .mv-icon {
+        background: var(--primary-dark);
+        transform: rotateY(180deg);
+      }
+
+      .mv-card h3 {
+        color: var(--primary);
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+      }
+
+      /* Values Section */
+      .values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+      }
+
+      .value-item {
+        text-align: center;
+        padding: 30px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: var(--transition);
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .value-item.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .value-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        background: var(--primary);
+        color: white;
+      }
+
+      .value-item:hover h3,
+      .value-item:hover .value-icon {
+        color: white;
+      }
+
+      .value-icon {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 20px;
+        transition: var(--transition);
+      }
+
+      .value-item h3 {
+        margin-bottom: 15px;
+        color: var(--primary);
+        transition: var(--transition);
+      }
+
+      /* History Section */
+      .history {
+        background: var(--light);
+      }
+
+      .timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .timeline:before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        width: 2px;
+        height: 100%;
+        background: var(--primary);
+        transform: translateX(-50%);
+      }
+
+      .timeline-item {
+        display: flex;
+        margin-bottom: 40px;
+        position: relative;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 1s ease, transform 1s ease;
+      }
+
+      .timeline-item.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .timeline-item:nth-child(even) {
+        flex-direction: row-reverse;
+      }
+
+      .timeline-content {
+        width: 45%;
+        padding: 20px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        position: relative;
+      }
+
+      .timeline-content:after {
+        content: "";
+        position: absolute;
+        top: 20px;
+        width: 20px;
+        height: 20px;
+        background: white;
+        transform: rotate(45deg);
+      }
+
+      .timeline-item:nth-child(odd) .timeline-content:after {
+        right: -10px;
+      }
+
+      .timeline-item:nth-child(even) .timeline-content:after {
+        left: -10px;
+      }
+
+      .timeline-dot {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        background: var(--primary);
+        border-radius: 50%;
+        transform: translateX(-50%);
+        z-index: 1;
+      }
+
+      .timeline-year {
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 10px;
+      }
+
+      /* Leadership Section */
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+      }
+
+      .team-member {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: var(--transition);
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .team-member.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .team-member:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .team-img {
+        height: 300px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .team-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: var(--transition);
+      }
+
+      .team-member:hover .team-img img {
+        transform: scale(1.1);
+      }
+
+      .team-info {
+        padding: 25px;
+        text-align: center;
+      }
+
+      .team-info h3 {
+        color: var(--primary);
+        margin-bottom: 5px;
+      }
+
+      .team-role {
+        color: var(--gray);
+        margin-bottom: 15px;
+        font-style: italic;
+      }
+
+      .team-social {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 15px;
+      }
+
+      .team-social a {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background: var(--light);
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+      }
+
+      .team-social a:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-3px);
+      }
+
+      /* Footer */
+      footer {
+        background: var(--dark);
+        color: white;
+        padding: 80px 0 30px;
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+        margin-bottom: 60px;
+      }
+
+      .footer-col h3 {
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 15px;
+      }
+
+      .footer-col h3:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: var(--secondary);
+      }
+
+      .footer-col p {
+        margin-bottom: 20px;
+        opacity: 0.8;
+        line-height: 1.8;
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 12px;
+      }
+
+      .footer-links a {
+        color: white;
+        text-decoration: none;
+        opacity: 0.8;
+        transition: var(--transition);
+        display: inline-block;
+      }
+
+      .footer-links a:hover {
+        opacity: 1;
+        color: var(--secondary);
+        transform: translateX(5px);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 25px;
+      }
+
+      .social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: white;
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      .social-links a:hover {
+        background: var(--primary);
+        transform: translateY(-5px);
+      }
+
+      .copyright {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        opacity: 0.7;
+        font-size: 0.9rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 992px) {
+        .about-hero h1 {
+          font-size: 2.8rem;
+        }
+
+        .btn {
+          width: auto;
+        }
+      }
+
+      @media (max-width: 768px) {
+        :root {
+          --section-spacing: 80px;
+        }
+
+        .nav-links {
+          position: fixed;
+          top: 80px;
+          left: -100%;
+          width: 80%;
+          height: calc(100vh - 80px);
+          background: white;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+          transition: var(--transition);
+          padding: 40px 0;
+          box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links.active {
+          left: 0;
+        }
+
+        .nav-links li {
+          margin: 15px 0;
+        }
+
+        .mobile-menu-btn {
+          display: block;
+        }
+
+        .about-hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .section-title h2 {
+          font-size: 2rem;
+        }
+
+        .timeline:before {
+          left: 30px;
+        }
+
+        .timeline-item {
+          flex-direction: row !important;
+        }
+
+        .timeline-content {
+          width: calc(100% - 80px);
+          margin-left: 80px;
+        }
+
+        .timeline-content:after {
+          left: -10px !important;
+          right: auto;
+        }
+
+        .timeline-dot {
+          left: 30px;
+        }
+
+        .scroll-to-top {
+          bottom: 20px;
+          right: 20px;
+          width: 40px;
+          height: 40px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .about-hero h1 {
+          font-size: 2rem;
+        }
+
+        .about-hero p {
+          font-size: 1rem;
+        }
+
+        .section-title h2 {
+          font-size: 1.8rem;
+        }
+
+        .mv-grid,
+        .values-grid,
+        .team-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Animation -->
+    <div class="loader-wrapper">
+      <div class="loader"></div>
+    </div>
+
+    <!-- Scroll to top button -->
+    <div class="scroll-to-top">
+      <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header>
+      <div class="container">
+        <div class="header-inner">
+          <div class="logo">
+            <a href="index.html"><img src="logo.png" alt="YAC Group Logo" /></a>
+            <div class="logo-text">YAC GROUP</div>
+          </div>
+          <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+          </button>
+          <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="index.html#companies">Companies</a></li>
+            <li><a href="index.html#logo-wall">Brands</a></li>
+            <li><a href="index.html#events">Events</a></li>
+            <li><a href="index.html#news">News</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- About Hero Section -->
+    <section class="about-hero">
+      <div class="container">
+        <div class="about-hero-content">
+          <h1>About YAC Group</h1>
+          <p>
+            Learn about our journey, mission, and the values that drive our
+            diverse portfolio of companies
+          </p>
+          <a href="#history" class="btn">Our Story</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission and Vision Section -->
+    <section class="section mission-vision">
+      <div class="container">
+        <div class="section-title">
+          <h2>Our Mission & Vision</h2>
+          <p>Guiding principles that shape our business approach</p>
+        </div>
+        <div class="mv-grid">
+          <div class="mv-card">
+            <div class="mv-icon">
+              <i class="fas fa-bullseye"></i>
+            </div>
+            <h3>Our Mission</h3>
+            <p>
+              To consolidate excellence across diverse industries by leveraging
+              synergies between our subsidiaries, creating sustainable value for
+              stakeholders, and making positive contributions to the communities
+              we serve.
+            </p>
+          </div>
+          <div class="mv-card">
+            <div class="mv-icon">
+              <i class="fas fa-eye"></i>
+            </div>
+            <h3>Our Vision</h3>
+            <p>
+              To be Ghana's leading diversified conglomerate, recognized for
+              innovation, excellence, and social responsibility across all our
+              business sectors, while expanding our footprint across Africa and
+              beyond.
+            </p>
+          </div>
+          <div class="mv-card">
+            <div class="mv-icon">
+              <i class="fas fa-handshake"></i>
+            </div>
+            <h3>Our Approach</h3>
+            <p>
+              We believe in strategic diversification, ethical business
+              practices, and empowering local talent. Our approach combines
+              global best practices with deep local knowledge to create
+              sustainable businesses that deliver value.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="section values">
+      <div class="container">
+        <div class="section-title">
+          <h2>Our Core Values</h2>
+          <p>The foundation of everything we do</p>
+        </div>
+        <div class="values-grid">
+          <div class="value-item">
+            <div class="value-icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <h3>Excellence</h3>
+            <p>
+              We strive for the highest standards in all our endeavors,
+              continuously improving and innovating to exceed expectations.
+            </p>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>Integrity</h3>
+            <p>
+              We conduct business with honesty, transparency, and ethical
+              practices, building trust with all our stakeholders.
+            </p>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3>Innovation</h3>
+            <p>
+              We embrace change and continuously seek new ways to create value,
+              solve problems, and improve our services.
+            </p>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">
+              <i class="fas fa-heart"></i>
+            </div>
+            <h3>Social Responsibility</h3>
+            <p>
+              We are committed to making a positive impact on society through
+              our business practices and community initiatives.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- History Section -->
+    <section class="section history" id="history">
+      <div class="container">
+        <div class="section-title">
+          <h2>Our Journey</h2>
+          <p>Milestones in the growth of YAC Group Holdings</p>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-year">2018</div>
+              <h3>Foundation</h3>
+              <p>
+                YAC Group Holdings was established with a vision to consolidate
+                diverse business interests under one umbrella, starting with
+                Seventeen17 Pharmacy.
+              </p>
+            </div>
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-year">2019</div>
+              <h3>Expansion into Sports</h3>
+              <p>
+                Launched Club Consult Africa and Strike Ghana, expanding our
+                portfolio into sports management and apparel manufacturing.
+              </p>
+            </div>
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-year">2020</div>
+              <h3>Diversification</h3>
+              <p>
+                Established YAC Investments and YAC Media Productions, entering
+                the investment and media sectors despite global challenges.
+              </p>
+            </div>
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-year">2021</div>
+              <h3>Social Impact</h3>
+              <p>
+                Founded the Chibsah Foundation and Chibsah Farms, demonstrating
+                our commitment to social responsibility and sustainable
+                agriculture.
+              </p>
+            </div>
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-year">2022</div>
+              <h3>Strategic Growth</h3>
+              <p>
+                Added Konacare Limited, RC Events, and Waterroam West Africa to
+                our portfolio, expanding our reach in healthcare, events, and
+                water purification.
+              </p>
+            </div>
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-content">
+              <div class="timeline-year">2023</div>
+              <h3>Current Expansion</h3>
+              <p>
+                Launched Bricks and Marbles Ghana Ltd and YussFathia Ventures,
+                entering real estate development and general merchandising to
+                complete our diversified portfolio.
+              </p>
+            </div>
+            <div class="timeline-dot"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Leadership Section -->
+    <section class="section leadership">
+      <div class="container">
+        <div class="section-title">
+          <h2>Our Leadership</h2>
+          <p>The visionary minds behind YAC Group's success</p>
+        </div>
+        <div class="team-grid">
+          <div class="team-member">
+            <div class="team-img">
+              <img
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                alt="CEO"
+              />
+            </div>
+            <div class="team-info">
+              <h3>Yussif Chibsah</h3>
+              <div class="team-role">Founder & CEO</div>
+              <p>
+                Visionary leader with extensive experience in business
+                development and strategic planning across multiple industries.
+              </p>
+              <div class="team-social">
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="team-member">
+            <div class="team-img">
+              <img
+                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                alt="COO"
+              />
+            </div>
+            <div class="team-info">
+              <h3>Fathia Chibsah</h3>
+              <div class="team-role">Chief Operations Officer</div>
+              <p>
+                Operations expert with a proven track record in optimizing
+                business processes and driving operational excellence.
+              </p>
+              <div class="team-social">
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="team-member">
+            <div class="team-img">
+              <img
+                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                alt="CFO"
+              />
+            </div>
+            <div class="team-info">
+              <h3>Kwame Asare</h3>
+              <div class="team-role">Chief Financial Officer</div>
+              <p>
+                Financial strategist with expertise in managing diversified
+                investment portfolios and ensuring sustainable growth.
+              </p>
+              <div class="team-social">
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="team-member">
+            <div class="team-img">
+              <img
+                src="https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                alt="CTO"
+              />
+            </div>
+            <div class="team-info">
+              <h3>Ama Serwah</h3>
+              <div class="team-role">Chief Technology Officer</div>
+              <p>
+                Technology innovator driving digital transformation across all
+                YAC Group subsidiaries and operations.
+              </p>
+              <div class="team-social">
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <a href="index.html">
+              <img
+                src="logo.png"
+                alt="YAC Group Logo"
+                style="margin-bottom: 20px; max-width: 150px"
+            /></a>
+            <p>
+              A consolidation of diverse subsidiary companies driving innovation
+              and growth across multiple industries.
+            </p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="index.html#companies">Our Companies</a></li>
+              <li><a href="index.html#logo-wall">Subsidiary Logos</a></li>
+              <li><a href="index.html#events">Events</a></li>
+              <li><a href="index.html#news">News</a></li>
+              <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Our Companies</h3>
+            <ul class="footer-links">
+              <li><a href="#">Seventeen17 Pharmacy Ltd</a></li>
+              <li><a href="#">Konacare Limited</a></li>
+              <li><a href="#">Club Consult Africa Ltd</a></li>
+              <li><a href="#">Strike Ghana Ltd</a></li>
+              <li><a href="#">Chibsah Farms</a></li>
+              <li><a href="#">YAC Media Productions Ltd</a></li>
+              <li><a href="#">Chibsah Foundation</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Contact Us</h3>
+            <ul class="footer-links">
+              <li>
+                <i class="fas fa-map-marker-alt"></i> >Head Office: Tse Addo
+                High Street, Tebibiiano-Accra, Ghana
+              </li>
+              <li><i class="fas fa-phone"></i> +233 54 152 1002</li>
+              <li><i class="fas fa-envelope"></i> info@yacgroup.com</li>
+            </ul>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>&copy; 2025 YAC Group Holdings. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Page loading animation
+      window.addEventListener("load", function () {
+        const loaderWrapper = document.querySelector(".loader-wrapper");
+        setTimeout(function () {
+          loaderWrapper.style.opacity = "0";
+          setTimeout(function () {
+            loaderWrapper.style.display = "none";
+          }, 500);
+        }, 1000);
+      });
+
+      // Mobile menu toggle
+      const menuBtn = document.querySelector(".mobile-menu-btn");
+      const navLinks = document.querySelector(".nav-links");
+
+      menuBtn.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+        menuBtn.querySelector("i").classList.toggle("fa-bars");
+        menuBtn.querySelector("i").classList.toggle("fa-times");
+      });
+
+      // Close mobile menu when clicking on links
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          if (navLinks.classList.contains("active")) {
+            navLinks.classList.remove("active");
+            menuBtn.querySelector("i").classList.add("fa-bars");
+            menuBtn.querySelector("i").classList.remove("fa-times");
+          }
+        });
+      });
+
+      // Header scroll effect
+      window.addEventListener("scroll", () => {
+        const header = document.querySelector("header");
+        const scrollToTop = document.querySelector(".scroll-to-top");
+
+        if (window.scrollY > 50) {
+          header.classList.add("scrolled");
+          scrollToTop.classList.add("active");
+        } else {
+          header.classList.remove("scrolled");
+          scrollToTop.classList.remove("active");
+        }
+      });
+
+      // Scroll to top functionality
+      document.querySelector(".scroll-to-top").addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
+
+      // Scroll animations
+      function checkScroll() {
+        const sections = document.querySelectorAll(".section");
+        const mvCards = document.querySelectorAll(".mv-card");
+        const valueItems = document.querySelectorAll(".value-item");
+        const timelineItems = document.querySelectorAll(".timeline-item");
+        const teamMembers = document.querySelectorAll(".team-member");
+
+        sections.forEach((section) => {
+          const sectionTop = section.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (sectionTop < windowHeight - 100) {
+            section.classList.add("visible");
+          }
+        });
+
+        mvCards.forEach((card) => {
+          const cardTop = card.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (cardTop < windowHeight - 100) {
+            card.classList.add("visible");
+          }
+        });
+
+        valueItems.forEach((item) => {
+          const itemTop = item.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (itemTop < windowHeight - 100) {
+            item.classList.add("visible");
+          }
+        });
+
+        timelineItems.forEach((item) => {
+          const itemTop = item.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (itemTop < windowHeight - 100) {
+            item.classList.add("visible");
+          }
+        });
+
+        teamMembers.forEach((member) => {
+          const memberTop = member.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (memberTop < windowHeight - 100) {
+            member.classList.add("visible");
+          }
+        });
+      }
+
+      window.addEventListener("scroll", checkScroll);
+      window.addEventListener("load", checkScroll);
+    </script>
+  </body>
+</html>
