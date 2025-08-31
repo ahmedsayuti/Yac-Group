@@ -62,6 +62,14 @@
 
       .section {
         padding: var(--section-spacing) 0;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 1s ease, transform 1s ease;
+      }
+
+      .section.visible {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .section-title {
@@ -102,13 +110,31 @@
         text-transform: uppercase;
         font-size: 14px;
         letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .btn:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: white;
+        transition: var(--transition);
+        z-index: -1;
       }
 
       .btn:hover {
-        background: transparent;
         color: var(--primary);
         transform: translateY(-3px);
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn:hover:before {
+        left: 0;
       }
 
       .btn-outline {
@@ -117,9 +143,76 @@
         border-color: var(--primary);
       }
 
+      .btn-outline:before {
+        background: var(--primary);
+      }
+
       .btn-outline:hover {
+        color: white;
+      }
+
+      /* Loading Animation */
+      .loader-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease;
+      }
+
+      .loader {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(209, 159, 24, 0.2);
+        border-radius: 50%;
+        border-top: 5px solid var(--primary);
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Scroll to top button */
+      .scroll-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
         background: var(--primary);
         color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+        z-index: 999;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .scroll-to-top.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .scroll-to-top:hover {
+        background: var(--primary-dark);
+        transform: translateY(-5px);
       }
 
       /* Header & Navigation */
@@ -153,6 +246,11 @@
       .logo img {
         height: 45px;
         margin-right: 10px;
+        transition: var(--transition);
+      }
+
+      .logo:hover img {
+        transform: rotate(5deg);
       }
 
       .logo-text {
@@ -208,31 +306,75 @@
         border: none;
         cursor: pointer;
         color: var(--primary);
+        transition: var(--transition);
       }
 
-      /* Hero Section */
-      .hero {
+      .mobile-menu-btn:hover {
+        transform: rotate(90deg);
+      }
+
+      /* Hero Section Slider */
+      .hero-slider {
         height: 100vh;
-        display: flex;
-        align-items: center;
-        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-          url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80");
-        background-size: cover;
-        background-position: center;
-        color: white;
         position: relative;
         overflow: hidden;
       }
 
+      .hero-slides {
+        height: 100%;
+        width: 100%;
+        position: relative;
+      }
+
+      .hero-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 1s ease;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      .hero-slide.active {
+        opacity: 1;
+        z-index: 1;
+      }
+
+      .hero-slide:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+      }
+
       .hero-content {
         max-width: 800px;
-        z-index: 1;
+        z-index: 2;
+        position: relative;
+        padding: 0 20px;
+        color: white;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 1s ease 0.5s, transform 1s ease 0.5s;
+      }
+
+      .hero-slide.active .hero-content {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .hero h1 {
         font-size: 3.5rem;
         margin-bottom: 20px;
-        animation: fadeInUp 1s ease;
         font-weight: 800;
         line-height: 1.2;
       }
@@ -240,15 +382,65 @@
       .hero p {
         font-size: 1.2rem;
         margin-bottom: 40px;
-        animation: fadeInUp 1s ease 0.2s forwards;
-        opacity: 0;
       }
 
       .hero-buttons {
         display: flex;
         gap: 20px;
-        animation: fadeInUp 1s ease 0.4s forwards;
-        opacity: 0;
+      }
+
+      .slider-controls {
+        position: absolute;
+        bottom: 50px;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        z-index: 10;
+        gap: 10px;
+      }
+
+      .slider-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .slider-dot.active {
+        background: var(--primary);
+        transform: scale(1.3);
+      }
+
+      .slider-arrows {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 30px;
+        z-index: 10;
+        transform: translateY(-50%);
+      }
+
+      .slider-arrow {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .slider-arrow:hover {
+        background: var(--primary);
       }
 
       /* About Section */
@@ -276,6 +468,28 @@
         overflow: hidden;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         transition: var(--transition);
+        position: relative;
+      }
+
+      .about-image:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          rgba(209, 159, 24, 0.2),
+          rgba(0, 61, 120, 0.2)
+        );
+        opacity: 0;
+        transition: var(--transition);
+        z-index: 1;
+      }
+
+      .about-image:hover:before {
+        opacity: 1;
       }
 
       .about-image:hover {
@@ -335,6 +549,11 @@
         background: var(--primary);
         color: white;
         font-size: 2.5rem;
+        transition: var(--transition);
+      }
+
+      .company-card:hover .company-icon {
+        background: var(--primary-dark);
       }
 
       .company-content {
@@ -365,11 +584,16 @@
         font-size: 0.9rem;
         text-transform: uppercase;
         letter-spacing: 1px;
+        transition: var(--transition);
       }
 
       .company-link i {
         margin-left: 8px;
         transition: var(--transition);
+      }
+
+      .company-link:hover {
+        color: var(--primary-dark);
       }
 
       .company-link:hover i {
@@ -399,6 +623,35 @@
         align-items: center;
         justify-content: center;
         height: 100px;
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      .logo-item.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .logo-item:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          rgba(209, 159, 24, 0.1),
+          rgba(0, 61, 120, 0.1)
+        );
+        opacity: 0;
+        transition: var(--transition);
+      }
+
+      .logo-item:hover:before {
+        opacity: 1;
       }
 
       .logo-item:hover {
@@ -410,10 +663,14 @@
         max-width: 100%;
         max-height: 80px;
         transition: var(--transition);
+        filter: grayscale(100%);
+        opacity: 0.7;
       }
 
       .logo-item:hover img {
         transform: scale(1.1);
+        filter: grayscale(0%);
+        opacity: 1;
       }
 
       /* Events Section */
@@ -433,6 +690,13 @@
         overflow: hidden;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         transition: var(--transition);
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .event-card.visible {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .event-card:hover {
@@ -445,6 +709,11 @@
         color: white;
         padding: 15px;
         text-align: center;
+        transition: var(--transition);
+      }
+
+      .event-card:hover .event-date {
+        background: var(--primary-dark);
       }
 
       .event-date .day {
@@ -502,6 +771,13 @@
         overflow: hidden;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         transition: var(--transition);
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      .news-card.visible {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .news-card:hover {
@@ -512,6 +788,24 @@
       .news-image {
         height: 200px;
         overflow: hidden;
+        position: relative;
+      }
+
+      .news-image:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+        opacity: 0;
+        transition: var(--transition);
+        z-index: 1;
+      }
+
+      .news-card:hover .news-image:before {
+        opacity: 1;
       }
 
       .news-image img {
@@ -551,6 +845,50 @@
       .news-meta i {
         margin-right: 8px;
         color: var(--primary);
+      }
+
+      /* Stats Section */
+      .stats {
+        background: linear-gradient(
+            rgba(0, 85, 165, 0.9),
+            rgba(0, 85, 165, 0.9)
+          ),
+          url("https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80");
+        background-size: cover;
+        background-attachment: fixed;
+        color: white;
+        text-align: center;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+      }
+
+      .stat-item {
+        padding: 20px;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 1s ease, transform 1s ease;
+      }
+
+      .stat-item.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .stat-number {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        font-family: "Montserrat", sans-serif;
+      }
+
+      .stat-text {
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
       }
 
       /* Contact Section */
@@ -593,10 +931,19 @@
         padding: 30px;
         border-radius: 10px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 1s ease, transform 1s ease;
+      }
+
+      .contact-form.visible {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .form-group {
         margin-bottom: 20px;
+        position: relative;
       }
 
       .form-group label {
@@ -618,12 +965,153 @@
       .form-control:focus {
         outline: none;
         border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(0, 85, 165, 0.1);
+        box-shadow: 0 0 0 3px rgba(209, 159, 24, 0.1);
       }
 
       textarea.form-control {
         min-height: 120px;
         resize: vertical;
+      }
+
+      .form-error {
+        color: #dc3545;
+        font-size: 0.8rem;
+        margin-top: 5px;
+        display: none;
+      }
+
+      .form-control.error {
+        border-color: #dc3545;
+      }
+
+      .form-control.error + .form-error {
+        display: block;
+      }
+
+      /* Newsletter Form Styles */
+      .newsletter-section {
+        background: var(--primary-dark);
+        color: white;
+        padding: 80px 0;
+        text-align: center;
+      }
+
+      .newsletter-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .newsletter-form {
+        display: flex;
+        gap: 15px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .newsletter-input {
+        flex: 1;
+        min-width: 300px;
+        padding: 15px 20px;
+        border: none;
+        border-radius: 30px;
+        font-family: "Poppins", sans-serif;
+        font-size: 1rem;
+      }
+
+      .newsletter-input:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(209, 159, 24, 0.3);
+      }
+
+      .newsletter-btn {
+        padding: 15px 30px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 600;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .newsletter-btn:hover {
+        background: var(--secondary);
+        transform: translateY(-3px);
+      }
+
+      .newsletter-sticky {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: var(--primary);
+        color: white;
+        padding: 15px 0;
+        z-index: 900;
+        transform: translateY(100%);
+        transition: transform 0.5s ease;
+        box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .newsletter-sticky.active {
+        transform: translateY(0);
+      }
+
+      .newsletter-sticky .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .newsletter-sticky p {
+        margin: 0;
+        font-weight: 500;
+      }
+
+      .newsletter-sticky-form {
+        display: flex;
+        gap: 10px;
+        flex: 1;
+        max-width: 400px;
+      }
+
+      .newsletter-sticky-input {
+        flex: 1;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 20px;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .newsletter-sticky-btn {
+        padding: 10px 20px;
+        background: var(--primary-dark);
+        color: white;
+        border: none;
+        border-radius: 20px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .newsletter-sticky-btn:hover {
+        background: var(--secondary);
+      }
+
+      .newsletter-close {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        margin-left: 15px;
       }
 
       /* Modal */
@@ -693,42 +1181,6 @@
 
       .modal-close:hover {
         background: var(--primary-dark);
-      }
-
-      /* Stats Section */
-      .stats {
-        background: linear-gradient(
-            rgba(0, 85, 165, 0.9),
-            rgba(0, 85, 165, 0.9)
-          ),
-          url("https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80");
-        background-size: cover;
-        background-attachment: fixed;
-        color: white;
-        text-align: center;
-      }
-
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 40px;
-      }
-
-      .stat-item {
-        padding: 20px;
-      }
-
-      .stat-number {
-        font-size: 3.5rem;
-        font-weight: 800;
-        margin-bottom: 15px;
-        font-family: "Montserrat", sans-serif;
-      }
-
-      .stat-text {
-        font-size: 1.2rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
       }
 
       /* Footer */
@@ -858,6 +1310,15 @@
         .contact-container {
           gap: 30px;
         }
+
+        .newsletter-form {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .newsletter-input {
+          min-width: 100%;
+        }
       }
 
       @media (max-width: 768px) {
@@ -869,14 +1330,15 @@
           position: fixed;
           top: 80px;
           left: -100%;
-          width: 40%;
-          /* height: calc(100vh - 80px); */
+          width: 80%;
+          height: calc(100vh - 80px);
           background: white;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
+          justify-content: flex-start;
           transition: var(--transition);
           padding: 40px 0;
+          box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
         }
 
         .nav-links.active {
@@ -884,7 +1346,7 @@
         }
 
         .nav-links li {
-          margin: 20px 0;
+          margin: 15px 0;
         }
 
         .mobile-menu-btn {
@@ -911,6 +1373,32 @@
         .logo-item {
           height: 120px;
           padding: 15px;
+        }
+
+        .scroll-to-top {
+          bottom: 20px;
+          right: 20px;
+          width: 40px;
+          height: 40px;
+        }
+
+        .slider-arrows {
+          padding: 0 15px;
+        }
+
+        .slider-arrow {
+          width: 40px;
+          height: 40px;
+          font-size: 18px;
+        }
+
+        .newsletter-sticky .container {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .newsletter-sticky-form {
+          max-width: 100%;
         }
       }
 
@@ -941,10 +1429,30 @@
         .contact-form {
           padding: 20px;
         }
+
+        .newsletter-sticky-form {
+          flex-direction: column;
+        }
+
+        .newsletter-sticky-input,
+        .newsletter-sticky-btn {
+          width: 100%;
+          border-radius: 5px;
+        }
       }
     </style>
   </head>
   <body>
+    <!-- Loading Animation -->
+    <div class="loader-wrapper">
+      <div class="loader"></div>
+    </div>
+
+    <!-- Scroll to top button -->
+    <div class="scroll-to-top">
+      <i class="fas fa-arrow-up"></i>
+    </div>
+
     <!-- Header & Navigation -->
     <header>
       <div class="container">
@@ -969,20 +1477,90 @@
       </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-      <div class="container">
-        <div class="hero-content">
-          <h1>YAC Group Holdings</h1>
-          <p>
-            A diversified conglomerate driving growth and innovation across
-            multiple industries in Ghana and beyond.
-          </p>
-          <div class="hero-buttons">
-            <a href="#companies" class="btn">Explore Our Companies</a>
-            <a href="#contact" class="btn btn-outline">Contact Us</a>
+    <!-- Hero Section Slider -->
+    <section class="hero-slider" id="home">
+      <div class="hero-slides">
+        <!-- Slide 1 -->
+        <div
+          class="hero-slide active"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');
+          "
+        >
+          <div class="container">
+            <div class="hero-content">
+              <h1>YAC Group Holdings</h1>
+              <p>
+                A diversified conglomerate driving growth and innovation across
+                multiple industries in Ghana and beyond.
+              </p>
+              <div class="hero-buttons">
+                <a href="#companies" class="btn">Explore Our Companies</a>
+                <a href="#contact" class="btn btn-outline">Contact Us</a>
+              </div>
+            </div>
           </div>
         </div>
+
+        <!-- Slide 2 -->
+        <div
+          class="hero-slide"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');
+          "
+        >
+          <div class="container">
+            <div class="hero-content">
+              <h1>Driving Innovation</h1>
+              <p>
+                Leveraging synergies between our subsidiaries to create value
+                for stakeholders and contribute positively to communities.
+              </p>
+              <div class="hero-buttons">
+                <a href="#about" class="btn">About Us</a>
+                <a href="#news" class="btn btn-outline">Latest News</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div
+          class="hero-slide"
+          style="
+            background-image: url('https://images.unsplash.com/photo-1568992687947-868a62a9f521?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');
+          "
+        >
+          <div class="container">
+            <div class="hero-content">
+              <h1>Building Communities</h1>
+              <p>
+                Committed to excellence, innovation, and social responsibility
+                across all our business sectors.
+              </p>
+              <div class="hero-buttons">
+                <a href="#contact" class="btn">Partner With Us</a>
+                <a href="#events" class="btn btn-outline">Upcoming Events</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slider Controls -->
+      <div class="slider-arrows">
+        <div class="slider-arrow prev">
+          <i class="fas fa-chevron-left"></i>
+        </div>
+        <div class="slider-arrow next">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+
+      <div class="slider-controls">
+        <div class="slider-dot active"></div>
+        <div class="slider-dot"></div>
+        <div class="slider-dot"></div>
       </div>
     </section>
 
@@ -1338,6 +1916,32 @@
       </div>
     </section>
 
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+      <div class="newsletter-container">
+        <h2>Stay Updated with YAC Group</h2>
+        <p>
+          Subscribe to our newsletter for the latest news, updates, and insights
+          from our companies
+        </p>
+        <form
+          class="newsletter-form"
+          id="newsletterForm"
+          action="https://formspree.io/f/{your-form-id}"
+          method="POST"
+        >
+          <input
+            type="email"
+            name="email"
+            class="newsletter-input"
+            placeholder="Enter your email address"
+            required
+          />
+          <button type="submit" class="newsletter-btn">Subscribe</button>
+        </form>
+      </div>
+    </section>
+
     <!-- Events Section -->
     <section class="section events" id="events">
       <div class="container">
@@ -1553,6 +2157,7 @@
                   class="form-control"
                   required
                 />
+                <div class="form-error">Please enter your name</div>
               </div>
               <div class="form-group">
                 <label for="email">Email Address</label>
@@ -1563,6 +2168,7 @@
                   class="form-control"
                   required
                 />
+                <div class="form-error">Please enter a valid email address</div>
               </div>
               <div class="form-group">
                 <label for="subject">Subject</label>
@@ -1573,6 +2179,7 @@
                   class="form-control"
                   required
                 />
+                <div class="form-error">Please enter a subject</div>
               </div>
               <div class="form-group">
                 <label for="message">Message</label>
@@ -1582,6 +2189,7 @@
                   class="form-control"
                   required
                 ></textarea>
+                <div class="form-error">Please enter your message</div>
               </div>
               <button type="submit" class="btn">Send Message</button>
             </form>
@@ -1589,6 +2197,31 @@
         </div>
       </div>
     </section>
+
+    <!-- Newsletter Sticky Bar -->
+    <div class="newsletter-sticky" id="newsletterSticky">
+      <div class="container">
+        <p>Stay updated with YAC Group - Subscribe to our newsletter</p>
+        <form
+          class="newsletter-sticky-form"
+          id="newsletterStickyForm"
+          action="https://formspree.io/f/{your-form-id}"
+          method="POST"
+        >
+          <input
+            type="email"
+            name="email"
+            class="newsletter-sticky-input"
+            placeholder="Your email address"
+            required
+          />
+          <button type="submit" class="newsletter-sticky-btn">Subscribe</button>
+        </form>
+        <button class="newsletter-close" onclick="closeNewsletterSticky()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -1665,7 +2298,33 @@
       </div>
     </div>
 
+    <!-- Newsletter Success Modal -->
+    <div class="modal" id="newsletterSuccessModal">
+      <div class="modal-content">
+        <div class="modal-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h3>Subscription Successful!</h3>
+        <p>
+          Thank you for subscribing to our newsletter. You'll now receive
+          updates about YAC Group Holdings and our subsidiaries.
+        </p>
+        <button class="modal-close" onclick="closeNewsletterModal()">OK</button>
+      </div>
+    </div>
+
     <script>
+      // Page loading animation
+      window.addEventListener("load", function () {
+        const loaderWrapper = document.querySelector(".loader-wrapper");
+        setTimeout(function () {
+          loaderWrapper.style.opacity = "0";
+          setTimeout(function () {
+            loaderWrapper.style.display = "none";
+          }, 500);
+        }, 1000);
+      });
+
       // Mobile menu toggle
       const menuBtn = document.querySelector(".mobile-menu-btn");
       const navLinks = document.querySelector(".nav-links");
@@ -1676,20 +2335,121 @@
         menuBtn.querySelector("i").classList.toggle("fa-times");
       });
 
+      // Close mobile menu when clicking on links
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          if (navLinks.classList.contains("active")) {
+            navLinks.classList.remove("active");
+            menuBtn.querySelector("i").classList.add("fa-bars");
+            menuBtn.querySelector("i").classList.remove("fa-times");
+          }
+        });
+      });
+
       // Header scroll effect
       window.addEventListener("scroll", () => {
         const header = document.querySelector("header");
+        const scrollToTop = document.querySelector(".scroll-to-top");
+
         if (window.scrollY > 50) {
           header.classList.add("scrolled");
+          scrollToTop.classList.add("active");
         } else {
           header.classList.remove("scrolled");
+          scrollToTop.classList.remove("active");
         }
       });
 
-      // Animate company cards on scroll
-      const companyCards = document.querySelectorAll(".company-card");
+      // Scroll to top functionality
+      document.querySelector(".scroll-to-top").addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+      });
 
+      // Hero Slider Functionality
+      const slides = document.querySelectorAll(".hero-slide");
+      const dots = document.querySelectorAll(".slider-dot");
+      const prevBtn = document.querySelector(".slider-arrow.prev");
+      const nextBtn = document.querySelector(".slider-arrow.next");
+      let currentSlide = 0;
+      let slideInterval;
+
+      function showSlide(n) {
+        slides.forEach((slide) => slide.classList.remove("active"));
+        dots.forEach((dot) => dot.classList.remove("active"));
+
+        currentSlide = (n + slides.length) % slides.length;
+
+        slides[currentSlide].classList.add("active");
+        dots[currentSlide].classList.add("active");
+      }
+
+      function nextSlide() {
+        showSlide(currentSlide + 1);
+      }
+
+      function prevSlide() {
+        showSlide(currentSlide - 1);
+      }
+
+      function startSlider() {
+        slideInterval = setInterval(nextSlide, 5000);
+      }
+
+      function stopSlider() {
+        clearInterval(slideInterval);
+      }
+
+      // Initialize slider
+      startSlider();
+
+      // Event listeners for slider controls
+      nextBtn.addEventListener("click", () => {
+        stopSlider();
+        nextSlide();
+        startSlider();
+      });
+
+      prevBtn.addEventListener("click", () => {
+        stopSlider();
+        prevSlide();
+        startSlider();
+      });
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          stopSlider();
+          showSlide(index);
+          startSlider();
+        });
+      });
+
+      // Pause slider when hovering
+      const heroSlider = document.querySelector(".hero-slider");
+      heroSlider.addEventListener("mouseenter", stopSlider);
+      heroSlider.addEventListener("mouseleave", startSlider);
+
+      // Scroll animations
       function checkScroll() {
+        const sections = document.querySelectorAll(".section");
+        const companyCards = document.querySelectorAll(".company-card");
+        const logoItems = document.querySelectorAll(".logo-item");
+        const eventCards = document.querySelectorAll(".event-card");
+        const newsCards = document.querySelectorAll(".news-card");
+        const statItems = document.querySelectorAll(".stat-item");
+        const contactForm = document.querySelector(".contact-form");
+
+        sections.forEach((section) => {
+          const sectionTop = section.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (sectionTop < windowHeight - 100) {
+            section.classList.add("visible");
+          }
+        });
+
         companyCards.forEach((card) => {
           const cardTop = card.getBoundingClientRect().top;
           const windowHeight = window.innerHeight;
@@ -1698,6 +2458,51 @@
             card.classList.add("visible");
           }
         });
+
+        logoItems.forEach((item) => {
+          const itemTop = item.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (itemTop < windowHeight - 100) {
+            item.classList.add("visible");
+          }
+        });
+
+        eventCards.forEach((card) => {
+          const cardTop = card.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (cardTop < windowHeight - 100) {
+            card.classList.add("visible");
+          }
+        });
+
+        newsCards.forEach((card) => {
+          const cardTop = card.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (cardTop < windowHeight - 100) {
+            card.classList.add("visible");
+          }
+        });
+
+        statItems.forEach((item) => {
+          const itemTop = item.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (itemTop < windowHeight - 100) {
+            item.classList.add("visible");
+          }
+        });
+
+        if (contactForm) {
+          const formTop = contactForm.getBoundingClientRect().top;
+          const windowHeight = window.innerHeight;
+
+          if (formTop < windowHeight - 100) {
+            contactForm.classList.add("visible");
+          }
+        }
       }
 
       window.addEventListener("scroll", checkScroll);
@@ -1734,22 +2539,66 @@
       }
 
       window.addEventListener("scroll", animateStats);
+      window.addEventListener("load", animateStats);
+
+      // Form validation
+      const contactForm = document.getElementById("contactForm");
+      const formInputs = contactForm.querySelectorAll(".form-control");
+
+      formInputs.forEach((input) => {
+        input.addEventListener("blur", function () {
+          validateField(this);
+        });
+
+        input.addEventListener("input", function () {
+          clearError(this);
+        });
+      });
+
+      function validateField(field) {
+        const errorElement = field.nextElementSibling;
+
+        if (field.value.trim() === "") {
+          field.classList.add("error");
+          errorElement.style.display = "block";
+          return false;
+        }
+
+        if (field.type === "email") {
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailPattern.test(field.value)) {
+            field.classList.add("error");
+            errorElement.style.display = "block";
+            return false;
+          }
+        }
+
+        clearError(field);
+        return true;
+      }
+
+      function clearError(field) {
+        field.classList.remove("error");
+        const errorElement = field.nextElementSibling;
+        errorElement.style.display = "none";
+      }
 
       // Form submission handling
-      const contactForm = document.getElementById("contactForm");
       const successModal = document.getElementById("successModal");
 
       contactForm.addEventListener("submit", function (e) {
         e.preventDefault();
 
-        // Simple form validation
-        const name = document.getElementById("name").value;
-        const email = document.getElementById("email").value;
-        const subject = document.getElementById("subject").value;
-        const message = document.getElementById("message").value;
+        let formValid = true;
 
-        if (!name || !email || !subject || !message) {
-          alert("Please fill in all fields");
+        // Validate all fields
+        formInputs.forEach((input) => {
+          if (!validateField(input)) {
+            formValid = false;
+          }
+        });
+
+        if (!formValid) {
           return;
         }
 
@@ -1780,6 +2629,80 @@
           });
       });
 
+      // Newsletter form handling
+      const newsletterForm = document.getElementById("newsletterForm");
+      const newsletterStickyForm = document.getElementById(
+        "newsletterStickyForm"
+      );
+      const newsletterSuccessModal = document.getElementById(
+        "newsletterSuccessModal"
+      );
+      const newsletterSticky = document.getElementById("newsletterSticky");
+
+      function handleNewsletterSubmission(form, e) {
+        e.preventDefault();
+
+        const email = form.querySelector('input[type="email"]').value;
+
+        // Basic email validation
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+          alert("Please enter a valid email address.");
+          return;
+        }
+
+        // Submit form via Formspree
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              // Show success modal
+              newsletterSuccessModal.classList.add("active");
+              form.reset();
+
+              // Hide sticky newsletter after successful submission
+              if (form === newsletterStickyForm) {
+                closeNewsletterSticky();
+              }
+            } else {
+              throw new Error("Newsletter subscription failed");
+            }
+          })
+          .catch((error) => {
+            alert(
+              "There was a problem with your subscription. Please try again later."
+            );
+            console.error("Error:", error);
+          });
+      }
+
+      newsletterForm.addEventListener("submit", (e) =>
+        handleNewsletterSubmission(newsletterForm, e)
+      );
+      newsletterStickyForm.addEventListener("submit", (e) =>
+        handleNewsletterSubmission(newsletterStickyForm, e)
+      );
+
+      // Show sticky newsletter after delay
+      setTimeout(() => {
+        newsletterSticky.classList.add("active");
+      }, 10000);
+
+      function closeNewsletterSticky() {
+        newsletterSticky.classList.remove("active");
+      }
+
+      function closeNewsletterModal() {
+        newsletterSuccessModal.classList.remove("active");
+      }
+
       // Close modal function
       function closeModal() {
         successModal.classList.remove("active");
@@ -1789,6 +2712,9 @@
       window.addEventListener("click", function (e) {
         if (e.target === successModal) {
           closeModal();
+        }
+        if (e.target === newsletterSuccessModal) {
+          closeNewsletterModal();
         }
       });
     </script>
